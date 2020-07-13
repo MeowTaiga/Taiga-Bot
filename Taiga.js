@@ -5,6 +5,7 @@ import { con } from './Database/Connection.js';
 import { addUser } from './Database/Functions.js';
 import { config } from './config.js';
 import { loadServer } from './Security/Server.js';
+import { activeRewards } from './Rewards/Reward.js';
 
 
 const Taiga = new Discord.Client;
@@ -23,9 +24,12 @@ Taiga.on('message', (message) => {
 
         //Count and log user to database
         addUser(message);
+
+        //Give user correct awards
+        activeRewards(message);
+
         //Check if the message is a command
         loadCommands(message, Taiga);
-        console.log(Taiga);
         
 });
 
