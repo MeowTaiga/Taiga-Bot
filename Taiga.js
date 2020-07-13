@@ -24,7 +24,8 @@ Taiga.on('message', (message) => {
         //Count and log user to database
         addUser(message);
         //Check if the message is a command
-        loadCommands(message);
+        loadCommands(message, Taiga);
+        console.log(Taiga);
         
 });
 

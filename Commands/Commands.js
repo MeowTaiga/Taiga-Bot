@@ -3,8 +3,7 @@ import { loadProfile, editProfile } from "./User/Profile.js";
 import { loadServer } from "../Security/Server.js";
 import { messageCheck } from "../Security/Security.js";
 
-export function loadCommands(message) {
-
+export function loadCommands(message, Taiga) {
     //Check Message Security
     loadServer(message).Security && messageCheck(message);
 
@@ -28,7 +27,7 @@ export function loadCommands(message) {
         case `info`:
         case 'profile':
         case 'p':
-            return loadProfile(message);
+            return loadProfile(message, Taiga);
         case 'iedit':
         case 'pedit':
             return editProfile(message, args);
