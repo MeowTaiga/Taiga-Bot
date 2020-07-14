@@ -25,7 +25,10 @@ $ pedit, pe - Lets a user edit their Profile
 ```
 	
 ## Setup
-To Start Taiga, run the commands below
+To Start Taiga, follow the steps below.
+
+
+Navigate to the Config.js in the root folder, and insert your Discord API token and MySQL Authentication
 
 ```
 $ cd ../Taiga-Bot
