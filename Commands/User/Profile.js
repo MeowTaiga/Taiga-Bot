@@ -1,28 +1,41 @@
 import { getProfile, updateProfile, getBank } from "../../Database/Functions.js";
 import {MessageEmbed} from 'discord.js'
+import { getUserStats } from "../../Database/User.js";
+
+
+function bankIcon(amount) {
+    switch(true) {
+        case amount <= 100:
+            return `💰`;
+        default:
+            return `💸`
+    }
+}
+
 
 
 export function loadProfile(message, Taiga) {
     const Embed = new MessageEmbed;
-    let badge = Taiga.emojis.cache.find(emoji => emoji.name === "verified");
     getProfile(message, data => {
         if(!data) return;
         getBank(message, bank => {
-            Embed.setAuthor(message.author.username, 'https://i.imgur.com/PCxqsMg.gif')
-            Embed.title = data.profile_title;
-            Embed.description = data.profile_desc;
-            Embed.color = data.profile_color;
-            Embed.addField(`🐖 Bank`, `${bank.money}`, true)
-            Embed.addField(`💎 Gems`, `${bank.cookies}`, true)
-            Embed.setThumbnail(`https://i.imgur.com/PCxqsMg.gif`);
-            Embed.setFooter(`${badge} ${data.messages} Messages Sent`)
-            
-    
-            console.log(Taiga.emojis.cache.find(emoji => emoji.name === "verified"));
-            //Embed.setFooter(`${Taiga.emojis.get('732301886429855745')} 19,180 Messages Sent`);
-    
-            message.channel.send(Embed);
-        })
+            if(!data) return;
+            getUserStats(message, stats => {
+                if(!data) return;
+                Embed.setAuthor(message.author.username, 'https://i.imgur.com/PCxqsMg.gif')
+                Embed.title = data.profile_title;
+                Embed.description = data.profile_desc;
+                Embed.color = data.profile_color;
+                Embed.addField(`${bankIcon(bank.money)} Bank`, `${bank.money}`, true)
+                Embed.addField(`💎 Gems`, `${bank.cookies}`, true)
+                Embed.setThumbnail(`https://i.imgur.com/PCxqsMg.gif`);
+                Embed.setFooter(`${stats.messages} Messages Sent`)
+                
+                //Embed.setFooter(`${Taiga.emojis.get('732301886429855745')} 19,180 Messages Sent`);
+
+                message.channel.send(Embed);
+            });
+        });
     });
 }
 

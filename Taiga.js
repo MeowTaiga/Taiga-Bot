@@ -21,7 +21,6 @@ Taiga.on('ready', () => {
 
 
 Taiga.on('message', (message) => {
-
         //Count and log user to database
         addUser(message);
 
