@@ -1,12 +1,12 @@
 import { MessageEmbed } from 'discord.js'
-import { updateStat } from '../../Database/User.js';
+import { User } from '../../Database/User.js';
 import { getBankPromise } from '../../Database/Functions.js';
 import { NoMoney } from './NoMoney.js';
 
 let Embed = new MessageEmbed;
 let options = [`🐋`, `🍎`, `🍉`, `🍍`, `🍓`];
 
-export function Slots(message) {
+export function Slots(User) {
 
     getBankPromise(message).then(bank => {
         
@@ -28,7 +28,7 @@ export function Slots(message) {
         ]
         Embed.timestamp = new Date();
         message.channel.send(Embed);
-        updateStat(message, 'slots');
+        User(message).updateStat(message, 'slots');
 
     });
 }

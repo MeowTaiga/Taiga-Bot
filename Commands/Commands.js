@@ -3,7 +3,7 @@ import { loadProfile, editProfile } from "./User/Profile.js";
 import { loadServer } from "../Security/Server.js";
 import { messageCheck } from "../Security/Security.js";
 
-export function loadCommands(message, Taiga) {
+export function loadCommands(message, taiga, user) {
     //Check Message Security
     loadServer(message).Security && messageCheck(message);
 

@@ -1,6 +1,6 @@
 import { getProfile, updateProfile, getBank } from "../../Database/Functions.js";
 import {MessageEmbed} from 'discord.js'
-import { getUserStats } from "../../Database/User.js";
+import { User } from "../../Database/User.js";
 
 
 function bankIcon(amount) {
@@ -14,29 +14,15 @@ function bankIcon(amount) {
 
 
 
-export function loadProfile(message, Taiga) {
-    const Embed = new MessageEmbed;
-    getProfile(message, data => {
-        if(!data) return;
-        getBank(message, bank => {
-            if(!data) return;
-            getUserStats(message, stats => {
-                if(!data) return;
-                Embed.setAuthor(message.author.username, 'https://i.imgur.com/PCxqsMg.gif')
-                Embed.title = data.profile_title;
-                Embed.description = data.profile_desc;
-                Embed.color = data.profile_color;
-                Embed.addField(`${bankIcon(bank.money)} Bank`, `${bank.money}`, true)
-                Embed.addField(`💎 Gems`, `${bank.cookies}`, true)
-                Embed.setThumbnail(`https://i.imgur.com/PCxqsMg.gif`);
-                Embed.setFooter(`${stats.messages} Messages Sent`)
-                
-                //Embed.setFooter(`${Taiga.emojis.get('732301886429855745')} 19,180 Messages Sent`);
+export async function loadProfile(message, user, bank) {
 
-                message.channel.send(Embed);
-            });
-        });
-    });
+    const Embed = new MessageEmbed;
+
+    Embed.title = user.profile_title;
+    Embed.description = bank.money;
+
+    message.channel.send(Embed);
+
 }
 
 
