@@ -1,4 +1,4 @@
-## Taiga Bot Info
+## Taiga Bot Info - Written by MeowTaiga
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Commands](#commands)
