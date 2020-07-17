@@ -6,9 +6,8 @@ import { NoMoney } from './NoMoney.js';
 let Embed = new MessageEmbed;
 let options = [`🐋`, `🍎`, `🍉`, `🍍`, `🍓`];
 
-export function Slots(User) {
+export function Slots(message, user, bank) {
 
-    getBankPromise(message).then(bank => {
         
         if(bank.money < 100) return message.channel.send(NoMoney);
 
@@ -28,7 +27,6 @@ export function Slots(User) {
         ]
         Embed.timestamp = new Date();
         message.channel.send(Embed);
-        User(message).updateStat(message, 'slots');
+        user.updateStat('slots', 1);
 
-    });
 }

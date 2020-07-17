@@ -1,6 +1,7 @@
 import { con } from "../Database/Connection.js";
 import { Bank } from "./User/Bank.js";
 import { activeRewards } from "../Rewards/Reward.js";
+import { BadgeList } from "../Rewards/BadgeList.js";
     /*
      *  @class User
      *  User Class That Talks to the Database    
@@ -31,8 +32,8 @@ export class User {
      *  toEdit is an escaped string
      */
 
-    updateProfile(toEdit, type) {
-        con.query(`UPDATE users SET ${type} = ? WHERE discord_id=${message.author.id}`, [toEdit]);
+    updateProfile(type, toEdit) {
+        con.query(`UPDATE users SET profile_${type} = ? WHERE discord_id=${this.id}`, [toEdit]);
     }
 
     /* 
@@ -41,7 +42,8 @@ export class User {
      */
 
     giveBadge(badge) {
-        return con.query(`INSERT INTO badges (discord_id, messages) VALUES (${this.id}, ${badge})`);
+        let giftBadge = BadgeList.filter(list => list.name == badge);
+        return con.query(`INSERT INTO badges (discord_id, badge_id) VALUES (${this.id}, ${giftBadge[0].value})`);
     } 
 
     /* 
@@ -80,7 +82,7 @@ export class User {
     async getUserBadges() {
         let promise = new Promise((res, err) => {
             con.query(`SELECT * FROM badges WHERE discord_id = '${this.id}'`, function (err, results) {
-                !results.length ? res(false) : res(JSON.parse(JSON.stringify(results[0])));
+                !results.length ? res(false) : res(JSON.parse(JSON.stringify(results)));
             });
         });
         return await promise;

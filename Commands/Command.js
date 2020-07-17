@@ -1,6 +1,6 @@
 import { User } from "discord.js";
 import { Server } from "../Security/Server.js";
-import { loadProfile, editProfile } from "../Commands/User/Profile.js";
+import { editProfile, loadProfile } from "../Commands/User/Profile.js";
 
 
 export class Command {
@@ -12,9 +12,13 @@ export class Command {
 
     async render() {
 
+        /*
+            We await for the results from the database
+        */
         const u = await this.user.getUser();
         const b = await this.user.bank.getBank();
         const s = await this.user.getUserStats();
+
         const m = this.message;
 
         const args = this.message.content.split(/ +/);
@@ -34,10 +38,11 @@ export class Command {
             case `info`:
             case 'profile':
             case 'p':
-                return loadProfile(m, u, b);
+                const badge = await this.user.getUserBadges();
+                return loadProfile(m, u, b, s, badge);
             case 'iedit':
             case 'pedit':
-                return editProfile(m, args, u);
+                return editProfile(m, args, this.user);
         }
     }
 }

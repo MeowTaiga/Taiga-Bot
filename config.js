@@ -1,7 +1,7 @@
 export const config = {
 
     //Discord Auth
-    discordToken: `NzI1MTM5MDc0NDEwODcyODQz.XwdVhA.IdWeLjM6Y3MA-VCuYzD-V2nXbhE`,
+    discordToken: `your-discord-token`,
 
     //MySQL Auth
     host: "localhost",
